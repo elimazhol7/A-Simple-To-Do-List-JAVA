@@ -20,43 +20,93 @@ public class App {
             System.out.println("8. Exit");
             System.out.print("Choose an option: ");
 
+            String input = scanner.nextLine(); // read entire line
             int choice;
-            if (scanner.hasNextInt()) {
-                choice = scanner.nextInt();
-            } else {
+
+            try {
+                choice = Integer.parseInt(input); // convert to number
+            } catch (NumberFormatException e) {
                 System.out.println("Please enter a valid number!");
-                scanner.nextLine(); // clear invalid input
                 continue;
             }
-            scanner.nextLine(); // consume newline
 
-            if (choice == 1) {
-                System.out.print("Enter task description: ");
-                String desc = scanner.nextLine();
-                list.add(desc);
-            } else if (choice == 2) {
-                System.out.print("Enter task to mark complete: ");
-                String desc = scanner.nextLine();
-                list.complete(desc);
-            } else if (choice == 3) {
-                System.out.print("Enter task to mark incomplete: ");
-                String desc = scanner.nextLine();
-                list.incomplete(desc);
-            } else if (choice == 4) {
-                System.out.println("All tasks:");
-                list.all();
-            } else if (choice == 5) {
-                System.out.println("Completed tasks:");
-                list.complete();
-            } else if (choice == 6) {
-                System.out.println("Incomplete tasks:");
-                list.incomplete();
-            } else if (choice == 7) {
-                list.clear();
-            } else if (choice == 8) {
-                running = false;
-            } else {
-                System.out.println("Invalid choice.");
+            switch (choice) {
+                case 1:
+                    System.out.print("Enter task description: ");
+                    String desc1 = scanner.nextLine().trim();
+                    if (desc1.isEmpty()) {
+                        System.out.println("Task description cannot be empty.");
+                    } else {
+                        list.add(desc1);
+                        System.out.println("Added task: " + desc1);
+                    }
+                    break;
+
+                case 2:
+                    System.out.print("Enter task to mark complete: ");
+                    String desc2 = scanner.nextLine().trim();
+                    if (!list.complete(desc2)) {
+                        System.out.println("Task not found: " + desc2);
+                    } else {
+                        System.out.println("Marked complete: " + desc2);
+                    }
+                    break;
+
+                case 3:
+                    System.out.print("Enter task to mark incomplete: ");
+                    String desc3 = scanner.nextLine().trim();
+                    if (!list.incomplete(desc3)) {
+                        System.out.println("Task not found: " + desc3);
+                    } else {
+                        System.out.println("Marked incomplete: " + desc3);
+                    }
+                    break;
+
+                case 4:
+                    System.out.println("All tasks:");
+                    if (list.getAllTasks().isEmpty()) {
+                        System.out.println("No tasks found.");
+                    } else {
+                        for (Task t : list.getAllTasks()) {
+                            System.out.println(t);
+                        }
+                    }
+                    break;
+
+                case 5:
+                    System.out.println("Completed tasks:");
+                    if (list.getCompletedTasks().isEmpty()) {
+                        System.out.println("No completed tasks.");
+                    } else {
+                        for (Task t : list.getCompletedTasks()) {
+                            System.out.println(t);
+                        }
+                    }
+                    break;
+
+                case 6:
+                    System.out.println("Incomplete tasks:");
+                    if (list.getIncompleteTasks().isEmpty()) {
+                        System.out.println("No incomplete tasks.");
+                    } else {
+                        for (Task t : list.getIncompleteTasks()) {
+                            System.out.println(t);
+                        }
+                    }
+                    break;
+
+                case 7:
+                    list.clear();
+                    System.out.println("All tasks cleared!");
+                    break;
+
+                case 8:
+                    running = false;
+                    break;
+
+                default:
+                    System.out.println("Invalid choice.");
+                    break;
             }
         }
 

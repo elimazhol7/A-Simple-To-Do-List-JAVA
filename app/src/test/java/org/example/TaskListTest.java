@@ -11,7 +11,7 @@ class TaskListTest {
 
     @BeforeEach
     void setUp() {
-        list = new TaskList(); // Initialize a fresh TaskList for each test
+        list = new TaskList();
     }
 
     @Test
@@ -30,7 +30,6 @@ class TaskListTest {
     void testCompleteTask() {
         list.add("Task 1");
         list.complete("Task 1");
-
         assertTrue(list.getAllTasks().get(0).isComplete());
     }
 
@@ -39,7 +38,6 @@ class TaskListTest {
         list.add("Task 1");
         list.complete("Task 1");
         list.incomplete("Task 1");
-
         assertFalse(list.getAllTasks().get(0).isComplete());
     }
 
@@ -68,7 +66,6 @@ class TaskListTest {
         list.add("Task 1");
         list.add("Task 2");
         list.clear();
-
         assertTrue(list.getAllTasks().isEmpty());
     }
 }
